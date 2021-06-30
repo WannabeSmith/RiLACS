@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 from logging import info
-from rilacs.misc import stopping_times
+from rilacs.misc import get_stopping_times
 
 
 def plot_stopping_times(
@@ -28,13 +28,12 @@ def plot_stopping_times(
             spine.set_edgecolor("lightgrey")
 
         data = data_dict[data_name]
-        stopping_times_dict = stopping_times(
+        stopping_times_dict = get_stopping_times(
             martingale_dict=martingale_dict,
             data=data,
             nsim=nsim,
             alpha=alpha,
             num_proc=num_proc,
-            multiple_of=multiple_of,
         )
 
         # get counts of each of 0, 0.5, and 1. To use barplot in matplotlib

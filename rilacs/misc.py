@@ -51,7 +51,7 @@ def get_data_dict(N, margins, nuisances):
     return data_dict
 
 
-def stopping_times(martingale_dict, data, nsim=100, alpha=0.05, num_proc=1):
+def get_stopping_times(martingale_dict, data, nsim=100, alpha=0.05, num_proc=1):
     """
     Get stopping times for a collection of martingales
 
