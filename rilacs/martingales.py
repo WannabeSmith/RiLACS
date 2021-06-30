@@ -10,7 +10,6 @@ from confseq.betting import (
 from rilacs.strategies import apriori_Kelly_bet
 
 
-
 def apriori_Kelly_martingale(
     x: npt.ArrayLike[float], m: float, N: int, n_A: int, n_B: int
 ) -> npt.ArrayLike[float]:
@@ -61,5 +60,3 @@ def distKelly_martingale(
         convex_comb=True,
     )
     return mart
-
-
