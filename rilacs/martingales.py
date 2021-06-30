@@ -1,6 +1,5 @@
 from typing import Callable
 import numpy as np
-import numpy.typing as npt
 from confseq.betting import (
     betting_mart,
     diversified_betting_mart,
@@ -11,8 +10,8 @@ from rilacs.strategies import apriori_Kelly_bet
 
 
 def apriori_Kelly_martingale(
-    x: npt.ArrayLike[float], m: float, N: int, n_A: int, n_B: int
-) -> npt.ArrayLike[float]:
+    x: np.ndarray, m: float, N: int, n_A: int, n_B: int
+) -> np.ndarray:
     apriori_Kelly_lambda = lambda x, m: apriori_Kelly_bet(n_A, n_B)
     return betting_mart(
         x,
@@ -27,10 +26,10 @@ def apriori_Kelly_martingale(
 
 
 def distKelly_martingale(
-    x: npt.ArrayLike[float],
+    x: np.ndarray,
     m: float,
     N: int,
-    dist: Callable[[npt.ArrayLike[float]], npt.ArrayLike[float]],
+    dist: Callable[[float], float],
     D: int = 10,
     beta: float = 1,
 ):
