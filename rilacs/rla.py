@@ -36,10 +36,11 @@ def apriori_Kelly_martingale(x, m, N, n_A, n_B):
 
 
 def distKelly_martingale(x, m, N, dist, D=10, beta=1):
-    m_t = mu_t(x, m, N)
-
     lambdas_fns_positive = [
-        lambda x, m, i=i: (i + 1) / (m_t * (D + 1)) for i in range(D)
+        lambda x, m, i=i: (i + 1) / (mu_t(x, m, N) * (D + 1)) for i in range(D)
+    ]
+    lambdas_fns_negative = [
+        lambda x, m, i=i: (i + 1) / ((1 - mu_t(x, m, N)) * (D + 1)) for i in range(D)
     ]
 
     discrete_unnormalized_dist = [dist((i + 1) / (D + 1)) for i in range(D)]
@@ -52,6 +53,7 @@ def distKelly_martingale(x, m, N, dist, D=10, beta=1):
         x,
         m,
         lambdas_fns_positive=lambdas_fns_positive,
+        lambdas_fns_negative=lambdas_fns_negative,
         lambdas_weights=lambdas_weights,
         N=N,
         theta=beta,
