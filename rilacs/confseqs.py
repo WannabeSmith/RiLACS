@@ -14,7 +14,7 @@ def apriori_Kelly(
     alpha: float = 0.05,
     running_intersection: bool = True,
     parallel: bool = False,
-) -> Tuple(np.ndarray, np.ndarray):
+) -> Tuple[np.ndarray, np.ndarray]:
     return cs_from_martingale(
         x,
         mart_fn=lambda x, m: apriori_Kelly_martingale(x, m, N=N, n_A=n_A, n_B=n_B),
@@ -36,7 +36,7 @@ def distKelly(
     alpha: float = 0.05,
     running_intersection: bool = True,
     parallel: bool = False,
-) -> Tuple(np.ndarray, np.ndarray):
+) -> Tuple[np.ndarray, np.ndarray]:
     return cs_from_martingale(
         x,
         mart_fn=lambda x, m: distKelly_martingale(x, m, N=N, dist=dist, D=D, beta=beta),
@@ -57,7 +57,7 @@ def sqKelly(
     alpha: float = 0.05,
     running_intersection: bool = True,
     parallel: bool = False,
-) -> Tuple(np.ndarray, np.ndarray):
+) -> Tuple[np.ndarray, np.ndarray]:
     return distKelly(
         x,
         N=N,
@@ -74,14 +74,13 @@ def sqKelly(
 def dKelly(
     x: np.ndarray,
     N: int,
-    dist: Callable[[float], float],
     D: int = 50,
     beta: float = 1,
     breaks: int = 1000,
     alpha: float = 0.05,
     running_intersection: bool = True,
     parallel: bool = False,
-) -> Tuple(np.ndarray, np.ndarray):
+) -> Tuple[np.ndarray, np.ndarray]:
     return distKelly(
         x,
         N=N,
