@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 import math
-from multiprocess import Pool
+import multiprocess
 
 
 def bravo(x, mu_alt, num_samples=None):
@@ -101,7 +101,7 @@ def get_stopping_times(martingale_dict, data, nsim=100, alpha=0.05, num_proc=1):
             result_array = np.append(result_array, stopping_time)
         return result_array
 
-    with Pool(processes=num_proc) as pool:
+    with multiprocess.Pool(processes=num_proc) as pool:
         results = np.array(pool.map(get_stopping_times, range(nsim)))
 
     for j in range(len(mart_names)):

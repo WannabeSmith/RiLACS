@@ -16,7 +16,7 @@ def apriori_Kelly_martingale(
     return betting_mart(
         x,
         m,
-        lambdas_fn_negative=apriori_Kelly_lambda,
+        lambdas_fn_positive=apriori_Kelly_lambda,
         N=N,
         convex_comb=True,
         theta=1,
@@ -46,16 +46,17 @@ def distKelly_martingale(
         discrete_unnormalized_dist
     )
 
-    mart = diversified_betting_mart(
-        x,
-        m,
-        lambdas_fns_positive=lambdas_fns_positive,
-        lambdas_fns_negative=lambdas_fns_negative,
-        lambdas_weights=lambdas_weights,
-        N=N,
-        theta=beta,
-        trunc_scale=1,
-        m_trunc=True,
-        convex_comb=True,
-    )
+    with np.errstate(divide="ignore"):
+        mart = diversified_betting_mart(
+            x,
+            m,
+            lambdas_fns_positive=lambdas_fns_positive,
+            lambdas_fns_negative=lambdas_fns_negative,
+            lambdas_weights=lambdas_weights,
+            N=N,
+            theta=beta,
+            trunc_scale=1,
+            m_trunc=True,
+            convex_comb=True,
+        )
     return mart
