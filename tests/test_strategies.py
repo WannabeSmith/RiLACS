@@ -22,4 +22,4 @@ def test_apriori_Kelly_bet(N, p):
     print(bets1 - bets2)
     assert abs(bets1 - bets2) < 10e-12
 
-    assert(apriori_Kelly_bet(n_A = 5000, n_B = 5000) == 0)
+    assert apriori_Kelly_bet(n_A=5000, n_B=5000) == 0
