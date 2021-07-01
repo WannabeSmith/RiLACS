@@ -42,6 +42,7 @@ jobs:
     - name: Check type consistency with pytype
       run: |
         pytype rilacs
+        pytype tests
     - name: Test with pytest
       run: |
         pytest
