@@ -9,6 +9,10 @@ setup(
     author_email="ianws@cmu.edu",
     license="BSD 3-Clause",
     packages=["rilacs"],
-    install_requires=["confseq @ https://github.com/WannabeSmith/confseq/tarball/master#egg=confseq", "numpy", "scipy"],
+    install_requires=[
+        "confseq @ https://github.com/WannabeSmith/confseq/tarball/master#egg=confseq",
+        "numpy",
+        "scipy",
+    ],
     zip_safe=False,
 )
