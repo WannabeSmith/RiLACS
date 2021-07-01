@@ -9,10 +9,9 @@ from rilacs.martingales import (
 )
 import itertools
 
-@pytest.mark.parametrize(
-    "mu", [0.51, 0.52, 0.53, 0.9, 0.99]
-)
-def test_apriori_Kelly_martingale(mu):
+
+@pytest.mark.parametrize("mu", [0.51, 0.52, 0.53, 0.9, 0.99])
+def test_apriori_Kelly_martingale_power(mu):
     N = 100000
     alpha = 0.05
 
@@ -25,6 +24,10 @@ def test_apriori_Kelly_martingale(mu):
     mart = apriori_Kelly_martingale(x, m=0.5, N=N, n_A=n_A, n_B=n_B)
     assert any(mart >= 1 / alpha)
 
+
+def test_apriori_Kelly_martingale_type1err():
+    N = 100000
+    alpha = 0.05
     # Martingale should not reject after N samples.
     # This will fail with some small probability.
     n_A = int(N / 2)
@@ -72,6 +75,6 @@ def test_distKelly_martingale(data_fn, beta):
             assert martingale(x, mu - 0.05)[int(N / 2)] >= 1 / alpha
         if beta == 0:
             assert martingale(x, mu + 0.05)[int(N / 2)] >= 1 / alpha
-        if beta == 1/2:
+        if beta == 1 / 2:
             assert martingale(x, mu - 0.05)[int(N / 2)] >= 1 / alpha
             assert martingale(x, mu + 0.05)[int(N / 2)] >= 1 / alpha
