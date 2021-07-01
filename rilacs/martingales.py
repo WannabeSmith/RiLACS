@@ -6,7 +6,7 @@ from confseq.betting import (
     mu_t,
 )
 
-from rilacs.strategies import apriori_Kelly_bet
+from rilacs.strategies import apriori_Kelly_bet, square_gamma_dist, uniform_gamma_dist
 
 
 def apriori_Kelly_martingale(
@@ -60,3 +60,23 @@ def distKelly_martingale(
             convex_comb=True,
         )
     return mart
+
+
+def sqKelly_martingale(
+    x: np.ndarray,
+    m: float,
+    N: int,
+    D: int = 10,
+    beta: float = 1,
+):
+    return distKelly_martingale(x=x, m=m, N=N, dist=square_gamma_dist, D=D, beta=beta)
+
+
+def dKelly_martingale(
+    x: np.ndarray,
+    m: float,
+    N: int,
+    D: int = 10,
+    beta: float = 1,
+):
+    return distKelly_martingale(x=x, m=m, N=N, dist=uniform_gamma_dist, D=D, beta=beta)
