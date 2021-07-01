@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 from logging import info
 import warnings
 from scipy.stats import binomtest
-from rilacs.rla import distKelly_martingale, square_gamma_dist
+from rilacs.martingales import distKelly_martingale
+from rilacs.strategies import square_gamma_dist
 
 N = 10000
 mean = 0.54
