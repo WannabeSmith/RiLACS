@@ -1,4 +1,8 @@
 .vscode
+.DS_Store
+
+# Ignore paper_plots output 
+paper_plots/**/*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
