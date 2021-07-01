@@ -1,4 +1,5 @@
-from rilacs.strategies import *
+import numpy as np
+from rilacs.strategies import apriori_Kelly_bet, apriori_Kelly_bet_general
 from confseq.utils import expand_grid
 import pytest
 
