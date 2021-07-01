@@ -7,6 +7,7 @@ from rilacs.martingales import (
     sqKelly_martingale,
     dKelly_martingale,
 )
+import itertools
 
 
 def test_apriori_Kelly_martingale():
@@ -32,22 +33,43 @@ def test_apriori_Kelly_martingale():
     assert mart[-1] < 1 / alpha
 
 
-def test_distKelly_martingale():
-    N = 10000
+@pytest.mark.parametrize(
+    "data_fn, beta",
+    itertools.product(
+        [
+            lambda: np.random.binomial(1, 0.5, 10000),
+            lambda: np.random.binomial(1, 0.1, 10000),
+            lambda: np.random.beta(1, 1, 10000),
+            lambda: np.random.beta(10, 30, 10000),
+        ],
+        [0, 1 / 2, 1],
+    ),
+)
+def test_distKelly_martingale(data_fn, beta):
     alpha = 0.05
 
-    x = np.random.beta(1, 1, N)
+    x = data_fn()
+    print(x)
+    N = len(x)
 
-    one_sided_martingales = [
-        lambda x, m: distKelly_martingale(x, m, N=N, dist=linear_gamma_dist, beta=1),
-        lambda x, m: sqKelly_martingale(x, m, N=N, beta=1),
-        lambda x, m: dKelly_martingale(x, m, N=N, beta=1),
+    martingales = [
+        lambda x, m: distKelly_martingale(x, m, N=N, dist=linear_gamma_dist, beta=beta),
+        lambda x, m: sqKelly_martingale(x, m, N=N, beta=beta),
+        lambda x, m: dKelly_martingale(x, m, N=N, beta=beta),
     ]
 
-    m = np.mean(x)
-    for martingale in one_sided_martingales:
-        assert martingale(x, m)[-1] < 1 / alpha
+    from confseq.betting import mu_t
 
-    m = np.mean(x)
-    for martingale in one_sided_martingales:
-        assert martingale(x, m + 0.01)[-1] >= 1 / alpha
+    mu = np.mean(x)
+    for martingale in martingales:
+        # After roughly 5000 observations, should not reject under the null, but should
+        # under the alternative.
+        # These tests will fail with small probability.
+        assert martingale(x, mu)[int(N / 2)] < 1 / alpha
+        if beta == 1:
+            assert martingale(x, mu - 0.05)[int(N / 2)] >= 1 / alpha
+        if beta == 0:
+            assert martingale(x, mu + 0.05)[int(N / 2)] >= 1 / alpha
+        if beta == 1/2:
+            assert martingale(x, mu - 0.05)[int(N / 2)] >= 1 / alpha
+            assert martingale(x, mu + 0.05)[int(N / 2)] >= 1 / alpha
