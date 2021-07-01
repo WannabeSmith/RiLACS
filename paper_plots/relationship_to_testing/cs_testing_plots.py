@@ -38,9 +38,7 @@ for spine in ax[0].spines.values():
 for spine in ax[1].spines.values():
     spine.set_edgecolor("lightgrey")
 
-l, u = cs_from_martingale(
-    x, mart_fn=martingale, N=N, parallel=True, breaks=500
-)
+l, u = cs_from_martingale(x, mart_fn=martingale, N=N, parallel=True, breaks=500)
 l = np.maximum.accumulate(l)
 
 colors = ["tab:pink", "mediumseagreen", "royalblue"]

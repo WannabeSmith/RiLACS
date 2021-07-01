@@ -3,7 +3,9 @@ from confseq.utils import expand_grid
 import pytest
 
 
-@pytest.mark.parametrize("N, p", expand_grid([10, 1000, 5821, 10000], [0.1, 0.5, 0.710293847, 0.9]))
+@pytest.mark.parametrize(
+    "N, p", expand_grid([10, 1000, 5821, 10000], [0.1, 0.5, 0.710293847, 0.9])
+)
 def test_apriori_Kelly_bet(N, p):
     # For binary x, computing the optimal bets via optimization or through
     # a closed-form expression should be identical. The only caveat being,
