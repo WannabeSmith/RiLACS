@@ -1,90 +1,14 @@
-import sys
+import math
 import numpy as np
 import matplotlib.pyplot as plt
-import time
-import multiprocess
+from confseq.betting import cs_from_martingale
+from rilacs.martingales import distKelly_martingale
+from rilacs.strategies import square_gamma_dist
+from rilacs.misc import get_data_dict
 
-sys.path.append("../../../confseq_wor/cswor")
-sys.path.append("../../../SHANGRLA/Code")
-sys.path.append("../../../Betting/Code")
-
-# for visual studio because debugging is a nightmare...
-sys.path.append("/Users/i/Documents/GitProjects/confseq_wor/cswor")
-sys.path.append("/Users/i/Documents/GitProjects/SHANGRLA/Code")
-sys.path.append("/Users/i/Documents/GitProjects/Betting/Code")
-
-sys.path.append("../../")
-
-test = sys.path
-import cswor as cswor
-import assertion_audit_utils as aau
-import betting_eb as beb
-from vacsine import *
-
-
-tnnm = aau.TestNonnegMean()
-kmart_N = lambda x: tnnm.kaplan_martingale(x, N=N, t=m_null)[1]
-
-# MC-Kmart
-mckmart_N = lambda x, m: mckmart(x, m=m, N=N, reps=100)
-
-mckmart2_N = lambda x: mckmart2(x, m=m_null, N=N, reps=50)
-
-# Hedged
-hedged_N = lambda x: beb.betting_mart(
-    x, m=m_null, WoR=True, N=N, theta=1, alpha=0.05 * 2, trunc_scale=0.8
+martingale = lambda x, m: distKelly_martingale(
+    x, m, N=N, dist=square_gamma_dist, D=50, beta=1
 )
-
-# aSOS
-aSOS_N = lambda x: beb.betting_mart(
-    x,
-    m=m_null,
-    WoR=True,
-    N=N,
-    theta=1,
-    lambdas_fn_positive=lambda x, m: np.maximum(0, beb.lambda_aSOS(x, m)),
-    trunc_scale=0.8,
-)
-
-# LBOW
-LBOW_N = lambda x: beb.betting_mart(
-    x,
-    m=m_null,
-    WoR=True,
-    N=N,
-    theta=1,
-    lambdas_fn_positive=lambda x, m: np.maximum(0, beb.lambda_LBOW(x, m)),
-)
-
-ONSm_N = lambda x: beb.betting_mart(
-    x,
-    m=m_null,
-    WoR=True,
-    N=N,
-    theta=1,
-    lambdas_fn_positive=lambda x, m: np.maximum(0, beb.lambda_COLT18_ONS(x, m)),
-    trunc_scale=0.8,
-)
-
-
-apriori_Kelly_N = lambda x, m: beb.betting_mart(
-    x,
-    m=m,
-    WoR=True,
-    N=N,
-    theta=1,
-    lambdas_fn_positive=lambda y, m: get_apriori_Kelly_bet(x),
-    trunc_scale=1,
-)
-
-TriKelly_N = lambda x, m: distKelly(x, m=m, N=N, dist=linear_gamma_dist)
-
-SqKelly_N = lambda x, m: distKelly(x, m=m, N=N, dist=square_gamma_dist, reps=50)
-
-apriori_BRAVO = lambda x, m: bravo(x, mu_alt=np.mean(x), num_samples=None)
-
-
-martingale = SqKelly_N
 
 N = 10000
 alpha = 0.05
@@ -102,28 +26,20 @@ for i in np.arange(0, len(nulls)):
     # Just a little hack for the plots.
     # this is taken care of rigorously in the cs code.
     mart_values[np.isnan(mart_values)] = math.inf if i != 2 else 1
-    pval_list[i] = np.minimum.accumulate(np.minimum(1/mart_values, 1))
+    pval_list[i] = np.minimum.accumulate(np.minimum(1 / mart_values, 1))
 
 plt.style.use("seaborn-white")
 plt.style.use("seaborn-colorblind")
 plt.rcParams["font.family"] = "serif"
 fig, ax = plt.subplots(1, 2, figsize=(7, 2.5))
-# ax[0].spines['top'].set_visible(False)
-# ax[0].spines['right'].set_visible(False)
-# ax[1].spines['top'].set_visible(False)
-# ax[1].spines['right'].set_visible(False)
-# ax[0].spines['left'].set_edgecolor('lightgrey')
-# ax[0].spines['bottom'].set_edgecolor('lightgrey')
-# ax[1].spines['left'].set_edgecolor('lightgrey')
-# ax[1].spines['bottom'].set_edgecolor('lightgrey')
 for spine in ax[0].spines.values():
-    spine.set_edgecolor('lightgrey')
+    spine.set_edgecolor("lightgrey")
 
 for spine in ax[1].spines.values():
-    spine.set_edgecolor('lightgrey')
+    spine.set_edgecolor("lightgrey")
 
-l, u = beb.cs_from_martingale(
-    x, mart_fn=martingale, WoR=True, N=N, parallel=True, breaks=500
+l, u = cs_from_martingale(
+    x, mart_fn=martingale, N=N, parallel=True, breaks=500
 )
 l = np.maximum.accumulate(l)
 
@@ -187,6 +103,6 @@ ax[1].set_yticks(np.append(alpha, np.arange(0.5, 1.5, step=0.5)))
 ax[1].legend(loc="upper right")
 
 plt.tight_layout()
-plt.savefig("figures/cs_testing.pdf", bbox_inches='tight')
+plt.savefig("cs_testing.pdf", bbox_inches="tight")
 
 plt.show()
