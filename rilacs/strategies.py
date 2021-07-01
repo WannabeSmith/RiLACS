@@ -8,7 +8,7 @@ def apriori_Kelly_bet_general(x_reported: np.ndarray) -> float:
     sol = root(objective, x0=0.1)
     assert sol["success"]
     bet = sol["x"]
-    return bet
+    return float(bet)
 
 
 def apriori_Kelly_bet(n_A: int, n_B: int) -> float:
