@@ -12,7 +12,7 @@ m_null = 1 / 2
 means = [0.53, 0.55]
 nuisances = [0]
 
-data_dict = get_data_dict(N, means, nuisances)
+data_dict = get_data_dict(N, margins=means - m_null, nuisances=nuisances)
 
 apriori_Kelly_martingale_fn = lambda x: apriori_Kelly_martingale(
     x, m=m_null, N=N, n_A=np.count_nonzero(x == 1), n_B=np.count_nonzero(x == 0)

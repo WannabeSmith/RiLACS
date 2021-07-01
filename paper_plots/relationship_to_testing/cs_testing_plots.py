@@ -12,10 +12,10 @@ martingale = lambda x, m: distKelly_martingale(
 
 N = 10000
 alpha = 0.05
-means = [0.5]
+margins = [0]
 nuisances = [0]
 
-data_dict = get_data_dict(N, means, nuisances)
+data_dict = get_data_dict(N, margins, nuisances)
 x = data_dict[list(data_dict.keys())[0]]
 t = np.arange(1, N + 1)
 
