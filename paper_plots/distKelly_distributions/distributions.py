@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from rilacs.rla import linear_gamma_dist, square_gamma_dist
+from rilacs.strategies import linear_gamma_dist, square_gamma_dist
 
 d = np.arange(0, 1 + 0.01, step=0.01)
 

@@ -35,10 +35,10 @@ assert len(colors) == len(cs_dict) and len(linestyles) == len(colors)
 colors_dict = {list(cs_dict.keys())[i]: colors[i] for i in range(len(cs_dict))}
 linestyles_dict = {list(cs_dict.keys())[i]: linestyles[i] for i in range(len(cs_dict))}
 
-means = [0.54]
+margins = [0.04]
 nuisances = [0]
 
-data_dict = get_data_dict(N, means, nuisances)
+data_dict = get_data_dict(N, margins, nuisances)
 x = data_dict[list(data_dict.keys())[0]]
 t = np.arange(1, N + 1)
 
@@ -77,7 +77,9 @@ for cs_name in cs_dict:
     )
 
 plt.ylim(0.2, 0.8)
-plt.axhline(means[0], color="grey", linestyle="-", label=r"true mean $\mu^\star$")
+plt.axhline(
+    0.5 + margins[0], color="grey", linestyle="-", label=r"true mean $\mu^\star$"
+)
 plt.legend(loc="lower right")
 plt.xlabel("Ballots sampled")
 plt.ylabel("Confidence sequence")

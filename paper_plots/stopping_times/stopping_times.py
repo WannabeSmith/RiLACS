@@ -12,10 +12,10 @@ N = 10000
 alpha = 0.05
 m_null = 1 / 2
 
-means = [0.55]
+margins = [0.05]
 nuisances = [0, 3000, 6000, 8000]
 
-data_dict = get_data_dict(N, means, nuisances)
+data_dict = get_data_dict(N, margins, nuisances)
 
 martingale_dict = {
     r"$\it{a\ priori}$ Kelly": lambda x: apriori_Kelly_martingale(

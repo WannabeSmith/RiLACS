@@ -27,7 +27,7 @@ def get_data_dict(N, margins, nuisances):
     data_dict = {}
     for election_outcomes_dict in election_outcomes_dicts:
         halves = election_outcomes_dict["nuisances"]
-        ones = int((N - halves) * election_outcomes_dict["margin"])
+        ones = int((N - halves) * (0.5 + election_outcomes_dict["margin"]))
         zeros = int(N - halves - ones)
         data = np.hstack(
             (

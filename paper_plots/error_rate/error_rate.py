@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from logging import info
 import warnings
 from scipy.stats import binomtest
 from rilacs.martingales import distKelly_martingale
