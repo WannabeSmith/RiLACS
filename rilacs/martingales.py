@@ -32,7 +32,7 @@ def distKelly_martingale(
     dist: Callable[[float], float],
     D: int = 10,
     beta: float = 1,
-):
+) -> np.ndarray:
     lambdas_fns_positive = [
         lambda x, m, i=i: (i + 1) / (mu_t(x, m, N) * (D + 1)) for i in range(D)
     ]
@@ -68,7 +68,7 @@ def sqKelly_martingale(
     N: int,
     D: int = 10,
     beta: float = 1,
-):
+) -> np.ndarray:
     return distKelly_martingale(x=x, m=m, N=N, dist=square_gamma_dist, D=D, beta=beta)
 
 
@@ -78,5 +78,5 @@ def dKelly_martingale(
     N: int,
     D: int = 10,
     beta: float = 1,
-):
+) -> np.ndarray:
     return distKelly_martingale(x=x, m=m, N=N, dist=uniform_gamma_dist, D=D, beta=beta)
