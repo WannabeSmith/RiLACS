@@ -9,14 +9,16 @@ from rilacs.martingales import (
 )
 import itertools
 
-
-def test_apriori_Kelly_martingale():
+@pytest.mark.parametrize(
+    "mu", [0.51, 0.52, 0.53, 0.9, 0.99]
+)
+def test_apriori_Kelly_martingale(mu):
     N = 100000
     alpha = 0.05
 
     # Martingale should have power against the alternative of m = 0.5.
     # This will fail with some small probability.
-    n_A = 51000
+    n_A = int(N * mu)
     n_B = N - n_A
     x = np.append(np.ones(n_A), np.zeros(n_B))
     np.random.shuffle(x)
