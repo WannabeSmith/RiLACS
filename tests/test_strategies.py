@@ -1,6 +1,6 @@
 import numpy as np
 from rilacs.strategies import apriori_Kelly_bet, apriori_Kelly_bet_general
-from confseq.utils import expand_grid
+from confseq.misc import expand_grid
 import pytest
 
 
@@ -21,3 +21,5 @@ def test_apriori_Kelly_bet(N, p):
     )
     print(bets1 - bets2)
     assert abs(bets1 - bets2) < 10e-12
+
+    assert(apriori_Kelly_bet(n_A = 5000, n_B = 5000) == 0)
