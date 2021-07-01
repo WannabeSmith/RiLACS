@@ -30,7 +30,7 @@ def distKelly(
     x: np.ndarray,
     N: int,
     dist: Callable[[float], float],
-    D: int = 50,
+    D: int = 10,
     beta: float = 1,
     breaks: int = 1000,
     alpha: float = 0.05,
@@ -51,7 +51,7 @@ def distKelly(
 def sqKelly(
     x: np.ndarray,
     N: int,
-    D: int = 50,
+    D: int = 10,
     beta: float = 1,
     breaks: int = 1000,
     alpha: float = 0.05,
@@ -74,7 +74,7 @@ def sqKelly(
 def dKelly(
     x: np.ndarray,
     N: int,
-    D: int = 50,
+    D: int = 10,
     beta: float = 1,
     breaks: int = 1000,
     alpha: float = 0.05,
