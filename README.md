@@ -6,11 +6,7 @@ This package implements the martingales and confidence sequences from ["RiLACS: 
 ## Installation
 
 ```bash
-# Clone the repository
-git clone git@github.com:WannabeSmith/RiLACS.git
-
-# Install the package
-pip install -e RiLACS
+pip install git+ssh://git@github.com/WannabeSmith/RiLACS.git
 ```
 _Note: we have plans to release this on pypi in the future_
 
