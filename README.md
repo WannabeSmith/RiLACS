@@ -25,6 +25,10 @@ l, u = sqKelly(x, N = 1000)
 
 ## Run unit tests
 ```bash
+# Clone the repository 
+git clone git@github.com:WannabeSmith/RiLACS.git
+
+# Run unit tests via pytest
 pytest RiLACS
 ```
 
