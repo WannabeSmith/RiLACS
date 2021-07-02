@@ -9,30 +9,30 @@ cs_dict = {
         N=N,
         n_A=np.sum(x),
         n_B=N - np.sum(x),
-        breaks=1000,
+        breaks=500,
         alpha=alpha,
         running_intersection=True,
-        parallel=True,
+        parallel=False,
     ),
     "SqKelly": lambda x: sqKelly(
         x,
         N=N,
-        D=20,
+        D=10,
         beta=1,
-        breaks=1000,
+        breaks=500,
         alpha=alpha,
         running_intersection=True,
-        parallel=True,
+        parallel=False,
     ),
     "dKelly/KMart": lambda x: dKelly(
         x,
         N=N,
-        D=20,
+        D=10,
         beta=1,
-        breaks=1000,
+        breaks=500,
         alpha=alpha,
         running_intersection=True,
-        parallel=True,
+        parallel=False,
     ),
 }
 
@@ -45,10 +45,10 @@ linestyles_dict = {list(cs_dict.keys())[i]: linestyles[i] for i in range(len(cs_
 
 N = 10000
 alpha = 0.05
-means = [0.54]
+margins = [0.04]
 nuisances = [0]
 
-data_dict = get_data_dict(N, means, nuisances)
+data_dict = get_data_dict(N, margins, nuisances)
 x = data_dict[list(data_dict.keys())[0]]
 t = np.arange(1, N + 1)
 
@@ -77,7 +77,9 @@ for cs_name in cs_dict:
         label=cs_name + "\nstopping time: " + str(stopping_idx + 1),
     )
 
-plt.axhline(means[0], color="grey", linestyle="-", label=r"true mean $\mu^\star$")
+plt.axhline(
+    margins[0] + 0.5, color="grey", linestyle="-", label=r"true mean $\mu^\star$"
+)
 plt.ylim(0.2, 0.55)
 plt.legend(loc="best")
 plt.xlabel("Ballots sampled")
