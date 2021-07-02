@@ -84,5 +84,3 @@ plt.legend(loc="lower right")
 plt.xlabel("Ballots sampled")
 plt.ylabel("Confidence sequence")
 plt.savefig("example_tallies.pdf")
-
-plt.show()

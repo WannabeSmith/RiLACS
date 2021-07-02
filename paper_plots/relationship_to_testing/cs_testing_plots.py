@@ -102,5 +102,3 @@ ax[1].legend(loc="upper right")
 
 plt.tight_layout()
 plt.savefig("cs_testing.pdf", bbox_inches="tight")
-
-plt.show()

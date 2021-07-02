@@ -27,5 +27,3 @@ plt.yticks(locs[1:], labels=labs[1:])
 plt.rcParams["figure.figsize"] = (6, 3)
 
 plt.savefig("distKelly_distributions.pdf", bbox_inches="tight")
-
-plt.show()
