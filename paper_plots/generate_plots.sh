@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 for folder in */; do
     cd $folder
