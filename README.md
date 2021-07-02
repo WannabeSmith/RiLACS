@@ -12,7 +12,7 @@ git clone git@github.com:WannabeSmith/RiLACS.git
 # Install the package
 pip install -e RiLACS
 ```
-_Note: we have plans to relase this on pypi in the future_
+_Note: we have plans to release this on pypi in the future_
 
 ## Compute a confidence sequence
 
