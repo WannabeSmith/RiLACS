@@ -4,6 +4,9 @@
 # Ignore paper_plots output 
 paper_plots/**/*.pdf
 
+# Raw Canada audit data
+canada_audit/Raw_data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
