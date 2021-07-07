@@ -40,8 +40,10 @@ class DistKelly_Bettor(AbstractKelly_Bettor):
         d = np.arange(1, D + 1)
         # Create a matrix of bets by taking the
         # outer product between d and 1/((D+1)*m_t)
-        bets = d[:, None] / ((D + 1) * m_t)
-        return np.maximum(0, np.minimum(bets, self.c / m_t))
+        with np.errstate(divide="ignore"):
+            bets = d[:, None] / ((D + 1) * m_t)
+            trunc_bets = np.maximum(0, np.minimum(bets, self.c / m_t))
+        return trunc_bets
 
 
 class Kelly_Bettor(AbstractKelly_Bettor):
@@ -59,7 +61,9 @@ class Kelly_Bettor(AbstractKelly_Bettor):
 
     def update_bet(self, ballot, m_t):
         self.t += 1
-        return np.maximum(0, np.minimum(self.bets, self.c / m_t))
+        with np.errstate(divide="ignore"):
+            bet = np.maximum(0, np.minimum(self.bets, self.c / m_t))
+        return bet
 
 
 class Audit(ABC):
@@ -92,7 +96,12 @@ class Betting_Audit(Audit):
         self.capitals = 1
 
     def _update_m_t(self, ballot):
-        self.m_t = ((self.N - self.t + 1) * self.m_t - ballot) / (self.N - self.t)
+        if self.N != self.t:
+            self.m_t = ((self.N - self.t + 1) * self.m_t - ballot) / (self.N - self.t)
+        else:
+            # If N == t, then we're at the final step and don't need to take any action
+            pass
+
         return self.m_t
 
     def update_cs(self, ballot):
@@ -102,13 +111,15 @@ class Betting_Audit(Audit):
 
         # Update the capital for each m_t
         # First compute capital process for each of the convex weights
-        self.capitals *= np.where(
-            self.m_t < 0, math.inf, 1 + bets * (ballot - self.m_t)
-        )
+        with np.errstate(invalid="ignore", over="ignore"):
+            self.capitals *= np.where(
+                self.m_t < 0, math.inf, 1 + bets * (ballot - self.m_t)
+            )
 
         # Take convex combination of capitals to get capital
         convex_weights = self.bettor.conv_weights
-        capital = np.sum(convex_weights[:, None] * self.capitals, axis=0)
+        with np.errstate(invalid="ignore"):
+            capital = np.sum(convex_weights[:, None] * self.capitals, axis=0)
         # Find the smallest m_t for which the capital is less than 1/alpha,
         # and take a superset
         l_idx = np.where(capital < 1 / self.alpha)[0][0]
