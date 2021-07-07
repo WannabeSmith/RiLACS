@@ -5,8 +5,12 @@ from confseq.betting import (
     diversified_betting_mart,
     mu_t,
 )
-
-from rilacs.strategies import apriori_Kelly_bet, square_gamma_dist, uniform_gamma_dist
+from rilacs.strategies import (
+    apriori_Kelly_bet,
+    square_gamma_dist,
+    uniform_gamma_dist,
+    get_conv_weights_from_dist,
+)
 
 
 def apriori_Kelly_martingale(
@@ -40,11 +44,7 @@ def distKelly_martingale(
         lambda x, m, i=i: (i + 1) / ((1 - mu_t(x, m, N)) * (D + 1)) for i in range(D)
     ]
 
-    discrete_unnormalized_dist = [dist((i + 1) / (D + 1)) for i in range(D)]
-
-    lambdas_weights = np.array(discrete_unnormalized_dist) / sum(
-        discrete_unnormalized_dist
-    )
+    lambdas_weights = get_conv_weights_from_dist(dist=dist, D=D)
 
     with np.errstate(divide="ignore"):
         mart = diversified_betting_mart(

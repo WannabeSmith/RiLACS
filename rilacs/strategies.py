@@ -1,3 +1,4 @@
+from typing import Callable
 import numpy as np
 from scipy.optimize import root
 
@@ -25,3 +26,9 @@ def square_gamma_dist(y: float) -> float:
 
 def uniform_gamma_dist(y: float) -> float:
     return 1
+
+
+def get_conv_weights_from_dist(dist: Callable[[float], float], D):
+    unnormalized_weights = [dist((i + 1) / D) for i in range(D)]
+    weights = np.array(unnormalized_weights) / sum(unnormalized_weights)
+    return weights
