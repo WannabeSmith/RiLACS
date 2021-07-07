@@ -53,7 +53,7 @@ main_parties = [
     "NDP-New Democratic Party",
     "People's Party",
     "Bloc Québécois",
-    "Independent"
+    "Independent",
 ]
 results_data = results_data.fillna(0)
 
@@ -76,7 +76,7 @@ shorthand_mapping = {
     "People's Party": "PPC",
     "Bloc Québécois": "Bloc",
     "Green Party": "Green",
-    "Independent": "Independent"
+    "Independent": "Independent",
 }
 
 results_data["Winner_shorthand"] = (
