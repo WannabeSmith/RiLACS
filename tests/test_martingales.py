@@ -54,7 +54,6 @@ def test_distKelly_martingale(data_fn, beta):
     alpha = 0.05
 
     x = data_fn()
-    print(x)
     N = len(x)
 
     martingales = [
@@ -62,8 +61,6 @@ def test_distKelly_martingale(data_fn, beta):
         lambda x, m: sqKelly_martingale(x, m, N=N, beta=beta),
         lambda x, m: dKelly_martingale(x, m, N=N, beta=beta),
     ]
-
-    from confseq.betting import mu_t
 
     mu = np.mean(x)
     for martingale in martingales:
