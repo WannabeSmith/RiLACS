@@ -41,7 +41,9 @@ def test_Kelly():
     x = np.hstack((np.ones(n_A), np.ones(n_B), np.repeat(1 / 2, N - n_A - n_B)))
     np.random.shuffle(x)
 
-    kelly_audit = Betting_Audit(N=N, bettor=Kelly_Bettor(n_A = n_A, n_B = n_B), breaks=500, alpha=0.1)
+    kelly_audit = Betting_Audit(
+        N=N, bettor=Kelly_Bettor(n_A=n_A, n_B=n_B), breaks=500, alpha=0.1
+    )
 
     l_incremental = lower_cs_from_audit(x, audit=kelly_audit)
     l_confseqs, u = apriori_Kelly(
@@ -49,4 +51,3 @@ def test_Kelly():
     )
 
     assert all(l_incremental == l_confseqs)
-    
