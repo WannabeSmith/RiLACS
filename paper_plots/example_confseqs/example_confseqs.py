@@ -11,8 +11,8 @@ cs_dict = {
         n_B=N - np.sum(x),
         breaks=500,
         alpha=alpha,
-        running_intersection=True,
-        parallel=False,
+        running_intersection=False,
+        parallel=True,
     ),
     "SqKelly": lambda x: sqKelly(
         x,
@@ -21,8 +21,8 @@ cs_dict = {
         beta=1,
         breaks=500,
         alpha=alpha,
-        running_intersection=True,
-        parallel=False,
+        running_intersection=False,
+        parallel=True,
     ),
     "dKelly/KMart": lambda x: dKelly(
         x,
@@ -31,8 +31,8 @@ cs_dict = {
         beta=1,
         breaks=500,
         alpha=alpha,
-        running_intersection=True,
-        parallel=False,
+        running_intersection=False,
+        parallel=True,
     ),
 }
 
@@ -52,7 +52,7 @@ data_dict = get_data_dict(N, margins, nuisances)
 x = data_dict[list(data_dict.keys())[0]]
 t = np.arange(1, N + 1)
 
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(6, 2.5))
 plt.style.use("seaborn-white")
 plt.style.use("seaborn-colorblind")
 plt.rcParams["font.family"] = "serif"
@@ -84,4 +84,4 @@ plt.ylim(0.2, 0.55)
 plt.legend(loc="best")
 plt.xlabel("Ballots sampled")
 plt.ylabel("Lower confidence sequence")
-plt.savefig("example_confseqs.pdf")
+plt.savefig("example_confseqs.pdf", bbox_inches="tight")

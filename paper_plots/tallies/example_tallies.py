@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-N = 10000
+N = 5000
 
 cs_dict = {
     "SqKelly 2sided": lambda x: sqKelly(
@@ -14,7 +14,7 @@ cs_dict = {
         beta=1 / 2,
         breaks=1000,
         alpha=0.05,
-        running_intersection=True,
+        running_intersection=False,
         parallel=True,
     ),
     "SqKelly 1sided": lambda x: sqKelly(
@@ -24,7 +24,7 @@ cs_dict = {
         beta=1,
         breaks=1000,
         alpha=0.05,
-        running_intersection=True,
+        running_intersection=False,
         parallel=True,
     ),
 }
@@ -42,7 +42,7 @@ data_dict = get_data_dict(N, margins, nuisances)
 x = data_dict[list(data_dict.keys())[0]]
 t = np.arange(1, N + 1)
 
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(6, 2.5))
 plt.style.use("seaborn-white")
 plt.style.use("seaborn-colorblind")
 plt.rcParams["font.family"] = "serif"
@@ -76,11 +76,11 @@ for cs_name in cs_dict:
         label=cs_name + "\nstopping time: " + str(stopping_idx + 1),
     )
 
-plt.ylim(0.2, 0.8)
+plt.ylim(0.15, 0.8)
 plt.axhline(
     0.5 + margins[0], color="grey", linestyle="-", label=r"true mean $\mu^\star$"
 )
 plt.legend(loc="lower right")
 plt.xlabel("Ballots sampled")
 plt.ylabel("Confidence sequence")
-plt.savefig("example_tallies.pdf")
+plt.savefig("example_tallies.pdf", bbox_inches="tight")

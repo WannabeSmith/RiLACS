@@ -12,6 +12,7 @@ def plot_stopping_times(
     alpha=0.05,
     num_proc=1,
     multiple_of=1,
+    figsize=(3.5, 2.75),
     bbox_to_anchor=None,
     ncol=None,
     filename_prefix="stopping_times_",
@@ -22,7 +23,7 @@ def plot_stopping_times(
         plt.style.use("seaborn-white")
         plt.style.use("seaborn-colorblind")
         plt.rcParams["font.family"] = "serif"
-        fig, ax = plt.subplots(1, 1, figsize=(3.5, 2.75))
+        fig, ax = plt.subplots(1, 1, figsize=figsize)
 
         for spine in ax.spines.values():
             spine.set_edgecolor("lightgrey")

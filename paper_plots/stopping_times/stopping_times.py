@@ -34,6 +34,7 @@ plot_stopping_times(
     alpha=alpha,
     num_proc=8,
     multiple_of=1,
-    bbox_to_anchor=(0.505, -0.7),
+    figsize=(3.5, 2.3),
+    bbox_to_anchor=(0.505, -0.82),
     ncol=2,
 )

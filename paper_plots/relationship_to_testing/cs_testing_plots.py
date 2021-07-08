@@ -31,7 +31,7 @@ for i in np.arange(0, len(nulls)):
 plt.style.use("seaborn-white")
 plt.style.use("seaborn-colorblind")
 plt.rcParams["font.family"] = "serif"
-fig, ax = plt.subplots(1, 2, figsize=(7, 2.5))
+fig, ax = plt.subplots(1, 2, figsize=(7, 2.3))
 for spine in ax[0].spines.values():
     spine.set_edgecolor("lightgrey")
 
