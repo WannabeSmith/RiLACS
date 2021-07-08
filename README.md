@@ -52,6 +52,14 @@ python RiLACS/paper_plots/relationship_to_testing/cs_testing_plots.py
 # and so on.
 ```
 
+## App to audit Canada's 2019 federal election
+
+The `canada_audit` folder contains code to produce a web application which allows for interactive auditing of Canadian ridings in the 2019 federal election.
+
+For more details, view the README in [`canada_audit`](./canada_audit)
+
+![audit](https://ian.waudbysmith.com/audit_demo_quick.gif)
+
 ## Contributing
 If you find a bug, please do [open an issue](https://github.com/wannabesmith/RiLACS/issues) and we'll try to fix it as soon as possible.
 
