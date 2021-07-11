@@ -32,7 +32,7 @@ git clone git@github.com:WannabeSmith/RiLACS.git
 pytest RiLACS
 ```
 
-## Produce the paper's plots
+## Reproduce the paper's plots
 
 To generate all plots, we've created a shell script at `RiLACS/paper_plots/generate_plots.sh`:
 
