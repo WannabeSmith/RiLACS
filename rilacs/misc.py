@@ -5,15 +5,35 @@ import multiprocess
 
 
 def bravo(x, mu_alt, num_samples=None):
+
+    num_ones = np.count_nonzero(x == 1)
+    num_zeros = np.count_nonzero(x == 0)
+    num_halves = np.count_nonzero(x == 1 / 2)
+
     num_samples = len(x) if num_samples is None else num_samples
 
-    x_contribution = [
-        2 * mu_alt if x_i == 1 else 2 * (1 - mu_alt) if x_i == 0 else 1 for x_i in x
-    ]
+    x_contribution = np.ones(num_samples)
 
-    x_contrib_sample = np.random.choice(x_contribution, size=num_samples, replace=True)
+    n = len(x)
 
-    return np.cumprod(x_contrib_sample)
+    for i in range(num_samples):
+        random_sample = np.random.choice(
+            (1, 0, 1 / 2), p=[num_ones / n, num_zeros / n, num_halves / n]
+        )
+
+        if random_sample == 1:
+            x_contribution[i] = 2 * mu_alt
+        elif random_sample == 0:
+            x_contribution[i] = 2 * (1 - mu_alt)
+        elif random_sample == 1 / 2:
+            # do nothing to martingale, but remove that observation from
+            # the population.
+            num_halves -= 1
+            n -= 1
+
+    martingale = np.cumprod(x_contribution)
+
+    return martingale
 
 
 def get_data_dict(N, margins, nuisances):
