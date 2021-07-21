@@ -2,18 +2,71 @@ import numpy as np
 import itertools
 import math
 import multiprocess
+from collections import defaultdict
 
 
 def bravo(x, mu_alt, num_samples=None):
+    num_ones = np.count_nonzero(x == 1)
+    num_zeros = np.count_nonzero(x == 0)
+    num_halves = np.count_nonzero(x == 1 / 2)
+
     num_samples = len(x) if num_samples is None else num_samples
 
-    x_contribution = [
-        2 * mu_alt if x_i == 1 else 2 * (1 - mu_alt) if x_i == 0 else 1 for x_i in x
-    ]
+    x_contribution = np.ones(num_samples)
 
-    x_contrib_sample = np.random.choice(x_contribution, size=num_samples, replace=True)
+    n = len(x)
 
-    return np.cumprod(x_contrib_sample)
+    for i in range(num_samples):
+        random_sample = np.random.choice(
+            (1, 0, 1 / 2), p=[num_ones / n, num_zeros / n, num_halves / n]
+        )
+
+        if random_sample == 1:
+            x_contribution[i] = 2 * mu_alt
+        elif random_sample == 0:
+            x_contribution[i] = 2 * (1 - mu_alt)
+        elif random_sample == 1 / 2:
+            # do nothing to martingale, but remove that observation from
+            # the population.
+            num_halves -= 1
+            n -= 1
+
+    martingale = np.cumprod(x_contribution)
+
+    return martingale
+
+
+def get_bravo_workload(x, mu_alt, alpha, num_samples=None):
+    num_samples = len(x) if num_samples is None else num_samples
+
+    unique_ballots = set()
+    ballot_numbers = list(range(len(x)))
+    sample_num = 1
+    martingale = 1
+    while martingale < 1 / alpha and len(unique_ballots) < num_samples:
+        random_ballot_number = np.random.choice(ballot_numbers)
+
+        unique_ballots.add(random_ballot_number)
+
+        ballot = x[random_ballot_number]
+        martingale *= (
+            2 * mu_alt if ballot == 1 else 2 * (1 - mu_alt) if ballot == 0 else 1
+        )
+        sample_num += 1
+
+    workload = len(unique_ballots)
+
+    return workload
+
+
+def get_workload_from_mart(x, mart_fn, alpha):
+    where_cross = np.where(mart_fn(x) >= 1 / alpha)[0]
+    if len(where_cross) == 0:
+        workload = len(x)
+    else:
+        workload = where_cross[0]
+
+    return workload
 
 
 def get_data_dict(N, margins, nuisances):
@@ -51,20 +104,18 @@ def get_data_dict(N, margins, nuisances):
     return data_dict
 
 
-def get_stopping_times(martingale_dict, data, nsim=100, alpha=0.05, num_proc=1):
+def get_workloads(workload_dict, data, nsim=100, alpha=0.05, num_proc=1):
     """
-    Get stopping times for a collection of martingales
+    Get workloads for a collection of audits
 
     Parameters
     ----------
-    martingale_dict, dict of {string : function}
-        dictionary of various martingales where the key is a
-        string indicating the name of the martingale, and
-        the function is a bivariate function which takes
+    workload_dict, dict of {string : function}
+        dictionary of various functions where the key is a
+        string indicating the name of the audit, and
+        the function is a univariate function which takes
         an array-like of [0, 1]-bounded real numbers (the
-        observations) and a [0, 1]-bounded real number (the
-        candidate mean), and outputs an array-like of
-        nonnegative numbers (the martingale)
+        observations) and outputs the workload for the audit.
 
     data, array-like of [0, 1]-bounded reals
         The population of ballots
@@ -84,28 +135,28 @@ def get_stopping_times(martingale_dict, data, nsim=100, alpha=0.05, num_proc=1):
     # Get things ready for the plot
     t = np.ones(N).cumsum()
 
-    mart_names = list(martingale_dict.keys())
+    audit_names = list(workload_dict.keys())
     stopping_times_dict = {}
 
-    def get_stopping_times(i):
+    def get_workload(i):
         np.random.seed()
         np.random.shuffle(data)
 
-        result_array = np.array([])
-        for mart_name in mart_names:
-            mart_closure = martingale_dict[mart_name]
-            mart_value = mart_closure(data)
-            mart_value[-1] = math.inf
+        result_array = [None] * len(audit_names)
+        for i in range(len(audit_names)):
+            audit_name = audit_names[i]
+            workload_closure = workload_dict[audit_name]
+            workload_value = workload_closure(data)
+            workload_value = np.minimum(workload_value, N)
 
-            stopping_time = np.where(mart_value > 1 / alpha)[0][0] + 1
-            result_array = np.append(result_array, stopping_time)
+            result_array[i] = workload_value
         return result_array
 
     with multiprocess.Pool(processes=num_proc) as pool:
-        results = np.array(pool.map(get_stopping_times, range(nsim)))
+        results = np.array(pool.map(get_workload, range(nsim)))
 
-    for j in range(len(mart_names)):
-        mart_name = mart_names[j]
-        stopping_times_dict[mart_name] = results[:, j]
+    for j in range(len(audit_names)):
+        audit_name = audit_names[j]
+        stopping_times_dict[audit_name] = results[:, j]
 
     return stopping_times_dict

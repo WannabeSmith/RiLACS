@@ -1,8 +1,8 @@
 from rilacs.martingales import apriori_Kelly_martingale
 from rilacs.confseqs import apriori_Kelly
 import numpy as np
-from rilacs.misc import get_data_dict
-from rilacs.plotting import plot_stopping_times
+from rilacs.misc import get_data_dict, get_workload_from_mart
+from rilacs.plotting import plot_workload
 
 
 N = 10000
@@ -54,15 +54,29 @@ apriori_Kelly_martingale_fn_missp3 = lambda x: apriori_Kelly_martingale(
     n_B=np.count_nonzero(x_missp3 == 0),
 )
 
-martingale_dict = {
-    r"$N_A' - N_A^\star = 0$": apriori_Kelly_martingale_fn,
-    r"$N_A' - N_A^\star = " + str(diff1 * N) + "$": apriori_Kelly_martingale_fn_missp,
-    r"$N_A' - N_A^\star = " + str(diff2 * N) + "$": apriori_Kelly_martingale_fn_missp2,
-    r"$N_A' - N_A^\star = " + str(diff3 * N) + "$": apriori_Kelly_martingale_fn_missp3,
+workload_dict = {
+    r"$N_A' - N_A^\star = 0$": lambda x: get_workload_from_mart(
+        x, mart_fn=apriori_Kelly_martingale_fn, alpha=alpha
+    ),
+    r"$N_A' - N_A^\star = "
+    + str(diff1 * N)
+    + "$": lambda x: get_workload_from_mart(
+        x, mart_fn=apriori_Kelly_martingale_fn_missp, alpha=alpha
+    ),
+    r"$N_A' - N_A^\star = "
+    + str(diff2 * N)
+    + "$": lambda x: get_workload_from_mart(
+        x, mart_fn=apriori_Kelly_martingale_fn_missp2, alpha=alpha
+    ),
+    r"$N_A' - N_A^\star = "
+    + str(diff3 * N)
+    + "$": lambda x: get_workload_from_mart(
+        x, mart_fn=apriori_Kelly_martingale_fn_missp3, alpha=alpha
+    ),
 }
 
-plot_stopping_times(
-    martingale_dict,
+plot_workload(
+    workload_dict,
     data_dict,
     nsim=1000,
     alpha=alpha,
