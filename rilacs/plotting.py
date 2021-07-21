@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 from logging import info
-from rilacs.misc import get_stopping_times
+from rilacs.misc import get_workloads
 
 
-def plot_stopping_times(
-    martingale_dict,
+def plot_workload(
+    workload_dict,
     data_dict,
     nsim=100,
     alpha=0.05,
@@ -29,8 +29,8 @@ def plot_stopping_times(
             spine.set_edgecolor("lightgrey")
 
         data = data_dict[data_name]
-        stopping_times_dict = get_stopping_times(
-            martingale_dict=martingale_dict,
+        stopping_times_dict = get_workloads(
+            workload_dict=workload_dict,
             data=data,
             nsim=nsim,
             alpha=alpha,
@@ -40,7 +40,7 @@ def plot_stopping_times(
         # get counts of each of 0, 0.5, and 1. To use barplot in matplotlib
         u, inv = np.unique(data, return_inverse=True)
         counts = np.bincount(inv)
-        for mart_name in martingale_dict:
+        for mart_name in workload_dict:
             stopping_times = stopping_times_dict[mart_name]
             avg_stopping_time_str = str(
                 np.around(np.median(stopping_times), decimals=1)
