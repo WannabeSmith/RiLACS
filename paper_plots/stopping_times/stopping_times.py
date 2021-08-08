@@ -4,6 +4,7 @@ from rilacs.martingales import (
     sqKelly_martingale,
 )
 import numpy as np
+import time
 import matplotlib.pyplot as plt
 from rilacs.misc import get_bravo_workload, get_data_dict, get_workload_from_mart
 from rilacs.plotting import plot_workload
@@ -42,6 +43,7 @@ workload_dict = {
 }
 
 
+start_time = time.time()
 plot_workload(
     workload_dict,
     data_dict,
@@ -49,7 +51,10 @@ plot_workload(
     alpha=alpha,
     num_proc=8,
     multiple_of=1,
-    figsize=(3.5, 2.3),
+    figsize=(3.5, 2.4),
     bbox_to_anchor=(0.505, -0.82),
     ncol=2,
 )
+end_time = time.time()
+
+print(end_time - start_time)

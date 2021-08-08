@@ -22,7 +22,5 @@ plt.xlabel(r"$d \in [D]$")
 plt.ylabel(r"$\theta_d$")
 plt.legend(loc="best")
 
-locs, labs = plt.yticks()
-plt.yticks(locs[1:], labels=labs[1:])
 
 plt.savefig("distKelly_distributions.pdf", bbox_inches="tight")
