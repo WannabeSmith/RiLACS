@@ -62,7 +62,7 @@ for i in np.arange(0, len(nulls)):
             x=stopping_time, color=colors[i], linestyle=":", ymin=0, ymax=nulls[i]
         )
         ax[0].text(
-            x=stopping_time + 30,
+            x=stopping_time + 35,
             y=0.35,
             s=str(stopping_time) + "\nballots",
             color=colors[i],
@@ -98,7 +98,13 @@ ax[1].get_xticklabels()[-1].set_color(colors[1])
 ax[1].set_ylim(-0.1, 1.1)
 ax[1].set_yticks(np.append(alpha, np.arange(0.5, 1.5, step=0.5)))
 
-ax[1].legend(loc="upper right")
-
 plt.tight_layout()
+
+ax[1].legend(
+    loc="lower right",
+    bbox_to_anchor=(0.57, -0.47),
+    ncol=3,
+)
+
+
 plt.savefig("cs_testing.pdf", bbox_inches="tight")
