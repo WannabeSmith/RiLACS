@@ -5,6 +5,18 @@ This package implements the martingales and confidence sequences from ["RiLACS: 
 
 ## Installation
 
+### Dependencies
+
+First, you'll need to install the [boost C++ libraries](https://www.boost.org/). This can typically be done via your OS package manager but the package name can differ slightly across them. Here are some common ones:
+
+- MacOS+Homebrew: `boost`
+- MacOS+MacPorts: `boost`
+- Arch: `boost`
+- Debian/Ubuntu: `libboost-all-dev`
+- Fedora: `boost-devel`
+
+### Install from github via pip
+
 ```zsh
 pip install git+ssh://git@github.com/WannabeSmith/RiLACS.git
 ```
