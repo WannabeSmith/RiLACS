@@ -57,7 +57,9 @@ def test_distKelly_martingale(data_fn, beta):
     N = len(x)
 
     martingales = [
-        lambda x, m: distKelly_martingale(x, m, N=N, dist=linear_gamma_dist, beta=beta),
+        lambda x, m: distKelly_martingale(
+            x, m=m, N=N, dist=linear_gamma_dist, beta=beta
+        ),
         lambda x, m: sqKelly_martingale(x, m, N=N, beta=beta),
         lambda x, m: dKelly_martingale(x, m, N=N, beta=beta),
     ]

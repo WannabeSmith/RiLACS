@@ -17,7 +17,7 @@ def apriori_Kelly(
 ) -> Tuple[np.ndarray, np.ndarray]:
     return cs_from_martingale(
         x,
-        mart_fn=lambda x, m: apriori_Kelly_martingale(x, m, N=N, n_A=n_A, n_B=n_B),
+        mart_fn=lambda x, m: apriori_Kelly_martingale(x, m=m, N=N, n_A=n_A, n_B=n_B),
         breaks=breaks,
         alpha=alpha,
         N=N,
@@ -39,7 +39,9 @@ def distKelly(
 ) -> Tuple[np.ndarray, np.ndarray]:
     return cs_from_martingale(
         x,
-        mart_fn=lambda x, m: distKelly_martingale(x, m, N=N, dist=dist, D=D, beta=beta),
+        mart_fn=lambda x, m: distKelly_martingale(
+            x, m=m, N=N, dist=dist, D=D, beta=beta
+        ),
         breaks=breaks,
         alpha=alpha,
         N=N,
