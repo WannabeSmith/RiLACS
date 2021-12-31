@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="rilacs",
-    version="0.1",
+    version="0.0.1",
     description="Risk limiting audits via confidence sequences",
     url="http://github.com/WannabeSmith/RiLACS",
     author="Ian Waudby-Smith",
