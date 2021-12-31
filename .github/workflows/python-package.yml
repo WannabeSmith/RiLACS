@@ -38,16 +38,18 @@ jobs:
           brew install boost
         fi
         python -m pip install --upgrade pip
-        python -m pip install pytest pyright wheel
+        python -m pip install pytest pytype wheel
         
     - name: Install package
       run: |
         pip install ./
   
     - name: Check type consistency with pyright
+      if: ${{ matrix.python-version != "3.10" }}
       run: |
-        pyright rilacs
-        pyright tests
+        # Run pytype on python versions 3.7--3.9. Pytype does not yet support 3.10 (https://github.com/google/pytype/issues/1022)
+        pytype rilacs
+        pytype tests
   
     - name: Run unit tests with pytest
       run: |
