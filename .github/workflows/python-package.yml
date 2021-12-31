@@ -38,16 +38,16 @@ jobs:
           brew install boost
         fi
         python -m pip install --upgrade pip
-        python -m pip install pytest pytype
+        python -m pip install pytest pyright
         
     - name: Install package
       run: |
         pip install ./
   
-    - name: Check type consistency with pytype
+    - name: Check type consistency with pyright
       run: |
-        pytype rilacs
-        pytype tests
+        pyright rilacs
+        pyright tests
   
     - name: Run unit tests with pytest
       run: |
