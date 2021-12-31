@@ -12,11 +12,13 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        
 
     steps:
     - uses: actions/checkout@v2
@@ -27,7 +29,12 @@ jobs:
     - name: Install dependencies
       run: |
         # Install boost library to OS
-        sudo apt-get install libboost-all-dev
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get update 
+          sudo apt-get install -y libboost-all-dev
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          brew install boost
+        fi
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest pytype
     - name: Install package
