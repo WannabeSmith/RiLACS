@@ -53,3 +53,12 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+        
+    - name: Build and upload wheels
+      run: |
+        pip wheel --no-deps ./
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: built_wheels
+        path: ./rilacs-*.whl
