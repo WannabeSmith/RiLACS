@@ -50,7 +50,7 @@ jobs:
         py_minor_version="$(python -c 'import sys; print(sys.version_info.minor)')"
         if [ "$py_minor_version" == 10 ]; then
           echo "Ignoring pytype on Python 3.10. Pytype does not yet support 3.10 (https://github.com/google/pytype/issues/1022)."
-        elif [ "$py_minor_version" < 10 ]; then
+        else
           pytype rilacs
           pytype tests
         fi
