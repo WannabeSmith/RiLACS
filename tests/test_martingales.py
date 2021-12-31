@@ -10,6 +10,7 @@ from rilacs.martingales import (
 import itertools
 
 
+@pytest.mark.random
 @pytest.mark.parametrize("mu", [0.51, 0.52, 0.53, 0.9, 0.99])
 def test_apriori_Kelly_martingale_power(mu):
     N = 100000
@@ -25,6 +26,7 @@ def test_apriori_Kelly_martingale_power(mu):
     assert any(mart >= 1 / alpha)
 
 
+@pytest.mark.random
 def test_apriori_Kelly_martingale_type1err():
     N = 100000
     alpha = 0.05
@@ -38,6 +40,7 @@ def test_apriori_Kelly_martingale_type1err():
     assert mart[-1] < 1 / alpha
 
 
+@pytest.mark.random
 @pytest.mark.parametrize(
     "data_fn, beta",
     itertools.product(

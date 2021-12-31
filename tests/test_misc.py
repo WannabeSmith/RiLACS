@@ -46,6 +46,7 @@ def test_get_data_dict():
     arr = data_dict["$(N_A^\\star, N_U^\\star, N_B^\\star) = (25500, 50000, 24500)$"]
 
 
+@pytest.mark.random
 def test_bravo():
     N = 100000
     mu_alt = 0.51

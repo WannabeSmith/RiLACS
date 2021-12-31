@@ -57,7 +57,7 @@ jobs:
   
     - name: Run unit tests with pytest
       run: |
-        pytest
+        pytest -m "not random"
         
     - name: Build and upload wheels
       run: |
