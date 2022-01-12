@@ -4,9 +4,13 @@ This package implements the martingales and confidence sequences from ["RiLACS: 
 
 ## Installation
 
+We currently support Python 3.7--3.10 on macOS (Intel/x86_64 and Apple Silicon) and Linux (x86_64).
+
 ```zsh
 pip install rilacs
 ```
+
+Installation on other platforms may still be possible, but in that case, the dependency [confseq](github.com/gostevehoward/confseq) would need to be installed manually. If you would like to see an additional platform supported, please open an [issue at confseq](https://github.com/gostevehoward/confseq/issues), not RiLACS.
 
 ## Compute a confidence sequence
 
