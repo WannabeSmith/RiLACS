@@ -1,26 +1,12 @@
 # RiLACS
 
-This package implements the martingales and confidence sequences from ["RiLACS: Risk-limiting audits via confidence sequences"](https://ian.waudbysmith.com/audit.pdf) and contains code for reproducing all of the plots therein.
-
+This package implements the martingales and confidence sequences from ["RiLACS: Risk-limiting audits via confidence sequences"](https://arxiv.org/pdf/2107.11323.pdf) and contains code for reproducing all of the plots therein.
 
 ## Installation
 
-### Dependencies
-
-First, you'll need to install the [boost C++ libraries](https://www.boost.org/). This can typically be done via your OS package manager but the package name can differ slightly across them. Here are some common ones:
-
-- MacOS+Homebrew: `boost`
-- MacOS+MacPorts: `boost`
-- Arch: `boost`
-- Debian/Ubuntu: `libboost-all-dev`
-- Fedora: `boost-devel`
-
-### Install from github via pip
-
 ```zsh
-pip install git+ssh://git@github.com/WannabeSmith/RiLACS.git
+pip install rilacs
 ```
-_Note: we have plans to release this on pypi in the future_
 
 ## Compute a confidence sequence
 
@@ -38,7 +24,7 @@ l, u = sqKelly(x, N = 1000)
 ## Run unit tests
 ```zsh
 # Clone the repository 
-git clone git@github.com:WannabeSmith/RiLACS.git
+git clone https://github.com/WannabeSmith/RiLACS.git
 
 # Run unit tests via pytest
 pytest RiLACS
@@ -73,9 +59,19 @@ For more details, view the README in [`canada_audit`](./canada_audit)
 ![audit](https://ian.waudbysmith.com/audit_demo_quick.gif)
 
 ## Contributing
-If you find a bug, please do [open an issue](https://github.com/wannabesmith/RiLACS/issues) and we'll try to fix it as soon as possible.
 
-If you want to add a feature or have other suggestions, feel free to reach out [via email](mailto:ianws@cmu.edu) or simply submit a [pull request](https://github.com/WannabeSmith/RiLACS/pulls)!
+If you find a bug, please [open an issue](https://github.com/wannabesmith/RiLACS/issues) and we'll try to fix it as soon as possible.
 
-## Credits
-The algorithms in this codebase were derived by [Ian Waudby-Smith](https://ian.waudbysmith.com), [Philip B. Stark](https://www.stat.berkeley.edu/~stark/), and [Aaditya Ramdas](http://stat.cmu.edu/~aramdas).
+## Citing
+
+The algorithms in this codebase are based on "RiLACS: Risk-limiting audits via confidence sequences" by Ian Waudby-Smith, Philip B. Stark, and Aaditya Ramdas. The BibTeX entry is provided here.
+
+@inproceedings{waudby2021rilacs,
+  title={RiLACS: Risk Limiting Audits via Confidence Sequences},
+  author={Waudby-Smith, Ian and Stark, Philip B and Ramdas, Aaditya},
+  booktitle={International Joint Conference on Electronic Voting},
+  pages={124--139},
+  year={2021},
+  organization={Springer}
+}
+
