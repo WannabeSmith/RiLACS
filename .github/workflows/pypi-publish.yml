@@ -2,7 +2,7 @@ name: Build and publish package
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   release:
     types: [ prereleased, released ]
 
