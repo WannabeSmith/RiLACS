@@ -1,4 +1,4 @@
-name: Linting+formatting
+name: Linting and formatting
 
 on: [push, pull_request]
 
@@ -7,11 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+  
+      - name: Check formatting with black
       - uses: psf/black@stable
       
       - name: Lint with flake8
         run: |
-          pip install flake8 pytype
+          pip install --upgrade flake8
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
