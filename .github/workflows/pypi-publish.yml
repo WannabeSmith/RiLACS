@@ -20,7 +20,7 @@ jobs:
       - name: Build dist
         run: |
           pip install --upgrade build
-          build ./
+          python -m build ./
 
       - uses: actions/upload-artifact@v2
         with:
