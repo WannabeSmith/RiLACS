@@ -10,7 +10,7 @@ setup(
     license="BSD 3-Clause",
     packages=["rilacs"],
     install_requires=[
-        "confseq @ https://github.com/WannabeSmith/confseq/tarball/master#egg=confseq",
+        "confseq",
         "numpy",
         "scipy",
     ],
