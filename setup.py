@@ -5,9 +5,10 @@ with open("README.md", "r") as fh:
 
 setup(
     name="rilacs",
-    version="1.0.2",
-    description="Risk limiting audits via confidence sequences",
+    version="1.0.3",
     long_description=long_description,
+    long_description_content_type="text/markdown",
+    description="Risk limiting audits via confidence sequences",
     url="http://github.com/WannabeSmith/RiLACS",
     author="Ian Waudby-Smith",
     author_email="ianws@cmu.edu",
