@@ -1,9 +1,13 @@
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name="rilacs",
-    version="1.0.0",
+    version="1.0.1",
     description="Risk limiting audits via confidence sequences",
+    long_description=long_description,
     url="http://github.com/WannabeSmith/RiLACS",
     author="Ian Waudby-Smith",
     author_email="ianws@cmu.edu",
