@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="rilacs",
-    version="1.0.1",
+    version="1.0.2",
     description="Risk limiting audits via confidence sequences",
     long_description=long_description,
     url="http://github.com/WannabeSmith/RiLACS",
