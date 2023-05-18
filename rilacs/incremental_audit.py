@@ -156,7 +156,7 @@ class Hoeffding_Audit(Audit):
 
     def _update_margin(self, ballot):
         l = self._get_lambda(self.t)
-        self.margin_numerator += l ** 2 / 8
+        self.margin_numerator += l**2 / 8
         self.margin_denominator += l * (1 + (self.t - 1) / (self.N - self.t + 1))
         self.margin = self.margin_numerator / self.margin_denominator
         return self.margin
@@ -201,7 +201,7 @@ class Empirical_Bernstein_Audit(Audit):
 
     def _update_margin(self, ballot):
         l = self._get_lambda(self.t)
-        self.margin_numerator += l ** 2 / 8
+        self.margin_numerator += l**2 / 8
         self.margin_denominator += l * (1 + (self.t - 1) / (self.N - self.t + 1))
         self.margin = self.margin_numerator / self.margin_denominator
         return self.margin
